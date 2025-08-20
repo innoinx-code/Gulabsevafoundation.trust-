@@ -11,12 +11,14 @@
 <!-- AOS Library for scroll animations -->
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  AOS.init({ duration: 1000, once: true, offset: 100 });
+  AOS.init({ duration: 1000, once: false, offset: 100 });
 });
 </script>
+
+<!-- Particles.js -->
+<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
 
 <style>
 /* Hero gradient animation */
@@ -31,38 +33,37 @@ document.addEventListener('DOMContentLoaded', () => {
   animation: gradientShift 25s ease infinite;
 }
 
-/* Social buttons with glow */
+/* Glass cards */
+.mission-item {
+  @apply p-6 rounded-xl bg-black/50 backdrop-blur-md shadow-lg transition transform text-center;
+}
+.mission-item:hover { @apply scale-105; }
+
+/* Section title gradient */
+.section-title { @apply text-3xl md:text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-green-500; }
+.section-text { @apply text-lg md:text-xl text-gray-300 mb-6; }
+
+/* Floating Follow & Join bar */
+#floatingBar { 
+  @apply fixed bottom-6 right-6 bg-black/80 backdrop-blur-md rounded-xl p-4 flex flex-col gap-3 items-center shadow-xl z-50 opacity-0 transition-opacity duration-1000;
+  animation: pulseBar 2s infinite;
+}
+@keyframes pulseBar { 0%,100%{opacity:1}50%{opacity:0.6} }
+
+/* Buttons */
 .social-btn {
-  @apply px-6 py-3 rounded-xl text-white font-bold text-lg hover:scale-105 hover:shadow-xl transition transform flex justify-center items-center;
+  @apply px-6 py-3 rounded-xl text-white font-bold text-lg hover:scale-105 transition transform flex justify-center items-center;
 }
 .social-btn:hover { box-shadow: 0 0 20px rgba(0,255,200,0.6), 0 0 40px rgba(0,200,255,0.4); }
 
-/* Pulse animation for hero buttons */
-@keyframes pulse1 {0%,100%{transform:scale(1);opacity:0.3}50%{transform:scale(1.05);opacity:0.6}}
-.animate-pulse-slow { animation: pulse1 8s ease-in-out infinite; }
-
-/* Glass cards */
-.mission-item {
-  @apply mb-3 p-6 rounded-xl bg-black/50 backdrop-blur-md shadow-lg transition transform cursor-default;
-}
-.mission-item:hover { @apply scale-105; text-center; }
-
-/* Section titles & text */
-.section-title { @apply text-3xl md:text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-green-500 text-center; }
-.section-text { @apply text-lg md:text-xl text-gray-300 mb-6 text-center; }
-
-/* Modal backdrop */
+/* Modal */
 #formModal { backdrop-filter: blur(6px); }
-
-/* Floating bar animation */
-@keyframes fadeIn {0% { opacity:0; transform:translateY(20px);} 100% {opacity:1; transform:translateY(0);}}
-.animate-fade-in { animation: fadeIn 1s forwards; }
 </style>
 </head>
 
 <body class="bg-black text-white">
 
-<!-- Sticky Navbar -->
+<!-- Navbar -->
 <nav class="fixed top-0 left-0 w-full bg-black/60 backdrop-blur-md z-50">
   <div class="max-w-6xl mx-auto px-6 flex justify-between items-center h-16">
     <div class="text-xl font-bold text-white">Gulab Seva Foundation</div>
@@ -84,68 +85,130 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
 </nav>
 
-<!-- Hero Section -->
+<!-- Hero -->
 <section class="h-screen flex flex-col justify-center items-center text-center px-6 relative overflow-hidden hero-bg">
+  <div id="particles-js" class="absolute inset-0 -z-20"></div>
   <h1 class="text-4xl md:text-6xl font-bold mb-4" data-aos="fade-up">Welcome to Gulab Seva Foundation</h1>
   <p class="text-lg md:text-2xl mb-8 text-gray-200" data-aos="fade-up" data-aos-delay="200">
-    A registered charitable trust transforming lives — every jobless, orphan, elderly, and underserved family receives home, education, healthcare, and dignity.
+    A registered charitable trust committed to providing hope, dignity, and opportunity to every life.
   </p>
-  <div class="flex flex-col md:flex-row gap-6 justify-center items-center mt-8 relative animate-pulse-slow" data-aos="zoom-in" data-aos-delay="400">
-    <a href="https://instagram.com/gulabsevafoundation" target="_blank" class="social-btn">Instagram</a>
-    <a href="https://whatsapp.com/channel/0029VbAqhEcHgZWdrnsEjy0C" target="_blank" class="social-btn">WhatsApp</a>
-    <a href="https://facebook.com/gulabsevafoundation" target="_blank" class="social-btn">Facebook</a>
-    <a href="https://forms.gle/JFB8wGcPE64qLyzi9" target="_blank" class="social-btn bg-gradient-to-r from-teal-400 to-green-500">Join Now</a>
+  <div class="flex flex-col md:flex-row gap-6 justify-center items-center mt-8 relative" data-aos="zoom-in" data-aos-delay="400">
+    <a href="https://instagram.com/gulabsevafoundation" target="_blank" class="social-btn bg-gradient-to-r from-pink-500 to-purple-500">Instagram</a>
+    <a href="https://whatsapp.com/channel/0029VbAqhEcHgZWdrnsEjy0C" target="_blank" class="social-btn bg-gradient-to-r from-green-400 to-teal-500">WhatsApp</a>
+    <a href="https://facebook.com/gulabsevafoundation" target="_blank" class="social-btn bg-gradient-to-r from-blue-500 to-indigo-500">Facebook</a>
+    <button id="openFormBtn" class="social-btn bg-gradient-to-r from-teal-400 to-green-500">Join Now</button>
   </div>
 </section>
 
-<!-- About / Mission / Vision / Programs Section -->
-<section class="py-16 px-6 max-w-6xl mx-auto">
-
+<!-- Mission -->
+<section class="py-16 px-6 max-w-6xl mx-auto text-center border-t border-gray-700">
   <h2 class="section-title" data-aos="fade-right">Our Mission</h2>
   <p class="section-text" data-aos="fade-left" data-aos-delay="100">
-    Gulab Seva Foundation brings hope, dignity, and opportunity to every life. We aim to create an India where everyone has a safe home, every child receives education, every elder is respected, and every deserving youth gains meaningful employment. Vulnerable people receive care and support at our GSF campuses.
+    We strive to build an India where every individual has a safe home, children receive quality education, elders are respected, and youth obtain meaningful employment. Vulnerable people are cared for with compassion, dignity, and equal opportunity.
   </p>
+</section>
 
-  <h2 class="section-title mt-12" data-aos="fade-right" data-aos-delay="200">Our Vision</h2>
-  <p class="section-text" data-aos="fade-left" data-aos-delay="300">
-    A society where no one is hungry, homeless, or helpless. Communities grow together, humanity remains the greatest strength, and the first 2 Crore followers receive GSF IDs representing trust, belonging, and priority access to all future benefits.
+<!-- Vision -->
+<section class="py-16 px-6 max-w-6xl mx-auto text-center border-t border-gray-700">
+  <h2 class="section-title" data-aos="fade-right">Our Vision</h2>
+  <p class="section-text" data-aos="fade-left" data-aos-delay="100">
+    A society free from hunger, homelessness, and helplessness, where every person is safe, respected, and empowered. Our first 2 Crore followers will receive a unique GSF ID, ensuring priority access to all programs.
   </p>
+</section>
 
-  <h2 class="section-title mt-12" data-aos="fade-right" data-aos-delay="400">Programs & Services</h2>
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8 justify-center mx-auto max-w-5xl">
+<!-- Programs & Services -->
+<section class="py-16 px-6 max-w-6xl mx-auto text-center border-t border-gray-700">
+  <h2 class="section-title" data-aos="fade-right">Programs & Services</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
     <div class="mission-item" data-aos="fade-up" data-aos-delay="100">
       <div class="text-teal-400 text-4xl mb-4">🏠</div>
-      <h3 class="text-xl font-bold mb-2">Safe Homes</h3>
-      <p>Providing shelter for orphans, elderly, and families in need at our GSF campuses.</p>
+      <h3 class="text-xl font-bold mb-2">Free Shelter</h3>
+      <p class="text-gray-200">Safe homes for orphans, elderly, and those in need.</p>
     </div>
     <div class="mission-item" data-aos="fade-up" data-aos-delay="200">
-      <div class="text-green-400 text-4xl mb-4">🎓</div>
+      <div class="text-green-400 text-4xl mb-4">📚</div>
       <h3 class="text-xl font-bold mb-2">Education</h3>
-      <p>Quality education, vocational training, and skill development at GSF schools.</p>
+      <p class="text-gray-200">Schools, vocational training, and learning opportunities for all.</p>
     </div>
     <div class="mission-item" data-aos="fade-up" data-aos-delay="300">
       <div class="text-blue-400 text-4xl mb-4">💊</div>
       <h3 class="text-xl font-bold mb-2">Healthcare</h3>
-      <p>Medical facilities, free health checkups, and hospitals at our campuses.</p>
+      <p class="text-gray-200">Hospitals, clinics, and free medical support.</p>
     </div>
     <div class="mission-item" data-aos="fade-up" data-aos-delay="400">
       <div class="text-purple-400 text-4xl mb-4">💼</div>
       <h3 class="text-xl font-bold mb-2">Employment</h3>
-      <p>Creating sustainable jobs and livelihood opportunities at GSF centers.</p>
+      <p class="text-gray-200">Sustainable jobs in our campuses for deserving youth.</p>
     </div>
     <div class="mission-item" data-aos="fade-up" data-aos-delay="500">
       <div class="text-pink-400 text-4xl mb-4">🌍</div>
-      <h3 class="text-xl font-bold mb-2">Community</h3>
-      <p>Building a strong network of supporters, followers, and volunteers worldwide.</p>
+      <h3 class="text-xl font-bold mb-2">Community Support</h3>
+      <p class="text-gray-200">Global network of followers, volunteers, and humanitarian assistance.</p>
     </div>
   </div>
-
 </section>
 
+<!-- Join Form Modal -->
+<div id="formModal" class="fixed inset-0 bg-black/70 flex justify-center items-center hidden z-50">
+  <div class="bg-black/90 rounded-xl max-w-3xl w-full p-6 relative text-white shadow-2xl">
+    <button id="closeFormBtn" class="absolute top-4 right-4 text-white text-2xl font-bold">&times;</button>
+    <h2 class="text-2xl font-bold mb-4">Join Gulab Seva Foundation</h2>
+    <iframe src="https://forms.gle/JFB8wGcPE64qLyzi9" width="100%" height="700" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+  </div>
+</div>
+
+<!-- Floating Follow & Join Bar -->
+<div id="floatingBar">
+  <a href="https://instagram.com/gulabsevafoundation" target="_blank" class="social-btn bg-gradient-to-r from-pink-500 to-purple-500">Instagram</a>
+  <a href="https://whatsapp.com/channel/0029VbAqhEcHgZWdrnsEjy0C" target="_blank" class="social-btn bg-gradient-to-r from-green-400 to-teal-500">WhatsApp</a>
+  <a href="https://facebook.com/gulabsevafoundation" target="_blank" class="social-btn bg-gradient-to-r from-blue-500 to-indigo-500">Facebook</a>
+  <button id="floatingJoinBtn" class="social-btn bg-gradient-to-r from-teal-400 to-green-500">Join Now</button>
+</div>
+
 <!-- Footer -->
-<footer class="py-6 text-center border-t border-gray-700 mt-12" data-aos="fade-up">
-  <p>© 2025 Gulab Seva Foundation | Humanitarian mission — no fees, no donations. Only service, trust, and humanity.</p>
+<footer class="py-6 text-center border-t border-gray-700 mt-12">
+  <p>© 2025 Gulab Seva Foundation | Humanitarian Mission — No Fees, No Donations, Only Service & Trust</p>
 </footer>
+
+<script>
+// Modal open/close
+const openBtn = document.getElementById('openFormBtn');
+const closeBtn = document.getElementById('closeFormBtn');
+const modal = document.getElementById('formModal');
+openBtn.addEventListener('click', () => modal.classList.remove('hidden'));
+closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+modal.addEventListener('click', (e) => { if(e.target===modal) modal.classList.add('hidden'); });
+
+// Navbar Mobile Menu
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+// Navbar Join Buttons
+const navJoinBtn = document.getElementById('navJoinBtn');
+const mobileJoinBtn = document.getElementById('mobileJoinBtn');
+navJoinBtn.addEventListener('click', () => modal.classList.remove('hidden'));
+mobileJoinBtn.addEventListener('click', () => modal.classList.remove('hidden'));
+
+// Floating Join Button
+const floatingJoinBtn = document.getElementById('floatingJoinBtn');
+floatingJoinBtn.addEventListener('click', () => modal.classList.remove('hidden'));
+
+// Show floating bar
+window.addEventListener('load', () => { document.getElementById('floatingBar').classList.add('opacity-100'); });
+
+// Initialize Particles
+particlesJS('particles-js', {
+  "particles": { "number": { "value":50,"density":{"enable":true,"value_area":800} },
+    "color":{"value":"#0AB6BC"}, "shape":{"type":"circle"},
+    "opacity":{"value":0.3,"random":true}, "size":{"value":3,"random":true},
+    "line_linked":{"enable":true,"distance":150,"color":"#0AB6BC","opacity":0.2,"width":1},
+    "move":{"enable":true,"speed":1,"direction":"none","random":true,"straight":false,"out_mode":"out"}
+  },
+  "interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":false},"onclick":{"enable":false},"resize":true}},
+  "retina_detect":true
+});
+</script>
 
 </body>
 </html>
