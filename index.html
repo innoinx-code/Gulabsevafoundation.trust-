@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gulab Seva Foundation</title>
+
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- AOS Library for scroll animations -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  AOS.init({ duration: 1000, once: true, offset: 100 });
+});
+</script>
+
+<style>
+/* Hero gradient animation */
+@keyframes gradientShift {
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+.hero-bg {
+  background: linear-gradient(270deg, #0AB6BC, #045C43, #021B23);
+  background-size: 600% 600%;
+  animation: gradientShift 25s ease infinite;
+}
+
+/* Social buttons with glow */
+.social-btn {
+  @apply px-6 py-3 rounded-xl text-white font-bold text-lg hover:scale-105 hover:shadow-xl transition transform flex justify-center items-center;
+}
+.social-btn:hover { box-shadow: 0 0 20px rgba(0,255,200,0.6), 0 0 40px rgba(0,200,255,0.4); }
+
+/* Pulse animation for hero buttons */
+@keyframes pulse1 {0%,100%{transform:scale(1);opacity:0.3}50%{transform:scale(1.05);opacity:0.6}}
+.animate-pulse-slow { animation: pulse1 8s ease-in-out infinite; }
+
+/* Glass cards */
+.mission-item {
+  @apply mb-3 p-6 rounded-xl bg-black/50 backdrop-blur-md shadow-lg transition transform cursor-default;
+}
+.mission-item:hover { @apply scale-105; text-center; }
+
+/* Section titles & text */
+.section-title { @apply text-3xl md:text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-green-500 text-center; }
+.section-text { @apply text-lg md:text-xl text-gray-300 mb-6 text-center; }
+
+/* Modal backdrop */
+#formModal { backdrop-filter: blur(6px); }
+
+/* Floating bar animation */
+@keyframes fadeIn {0% { opacity:0; transform:translateY(20px);} 100% {opacity:1; transform:translateY(0);}}
+.animate-fade-in { animation: fadeIn 1s forwards; }
+</style>
+</head>
+
+<body class="bg-black text-white">
+
+<!-- Sticky Navbar -->
+<nav class="fixed top-0 left-0 w-full bg-black/60 backdrop-blur-md z-50">
+  <div class="max-w-6xl mx-auto px-6 flex justify-between items-center h-16">
+    <div class="text-xl font-bold text-white">Gulab Seva Foundation</div>
+    <div class="hidden md:flex gap-4 items-center">
+      <a href="https://instagram.com/gulabsevafoundation" target="_blank" class="px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-500 rounded-lg text-white font-bold hover:scale-105 transition transform">Instagram</a>
+      <a href="https://whatsapp.com/channel/0029VbAqhEcHgZWdrnsEjy0C" target="_blank" class="px-4 py-2 bg-gradient-to-r from-green-400 to-teal-500 rounded-lg text-white font-bold hover:scale-105 transition transform">WhatsApp</a>
+      <a href="https://facebook.com/gulabsevafoundation" target="_blank" class="px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg text-white font-bold hover:scale-105 transition transform">Facebook</a>
+      <button id="navJoinBtn" class="px-4 py-2 bg-gradient-to-r from-teal-400 to-green-500 rounded-lg text-white font-bold hover:scale-105 transition transform">Join Now</button>
+    </div>
+    <div class="md:hidden flex items-center">
+      <button id="mobileMenuBtn" class="text-white text-2xl">&#9776;</button>
+    </div>
+  </div>
+  <div id="mobileMenu" class="hidden md:hidden bg-black/80 backdrop-blur-md flex flex-col gap-2 px-6 py-4">
+    <a href="https://instagram.com/gulabsevafoundation" target="_blank" class="text-white font-bold px-4 py-2 rounded-lg bg-gradient-to-r from-pink-500 to-purple-500">Instagram</a>
+    <a href="https://whatsapp.com/channel/0029VbAqhEcHgZWdrnsEjy0C" target="_blank" class="text-white font-bold px-4 py-2 rounded-lg bg-gradient-to-r from-green-400 to-teal-500">WhatsApp</a>
+    <a href="https://facebook.com/gulabsevafoundation" target="_blank" class="text-white font-bold px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-500">Facebook</a>
+    <button id="mobileJoinBtn" class="px-4 py-2 bg-gradient-to-r from-teal-400 to-green-500 rounded-lg text-white font-bold hover:scale-105 transition transform">Join Now</button>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="h-screen flex flex-col justify-center items-center text-center px-6 relative overflow-hidden hero-bg">
+  <h1 class="text-4xl md:text-6xl font-bold mb-4" data-aos="fade-up">Welcome to Gulab Seva Foundation</h1>
+  <p class="text-lg md:text-2xl mb-8 text-gray-200" data-aos="fade-up" data-aos-delay="200">
+    A registered charitable trust transforming lives — every jobless, orphan, elderly, and underserved family receives home, education, healthcare, and dignity.
+  </p>
+  <div class="flex flex-col md:flex-row gap-6 justify-center items-center mt-8 relative animate-pulse-slow" data-aos="zoom-in" data-aos-delay="400">
+    <a href="https://instagram.com/gulabsevafoundation" target="_blank" class="social-btn">Instagram</a>
+    <a href="https://whatsapp.com/channel/0029VbAqhEcHgZWdrnsEjy0C" target="_blank" class="social-btn">WhatsApp</a>
+    <a href="https://facebook.com/gulabsevafoundation" target="_blank" class="social-btn">Facebook</a>
+    <a href="https://forms.gle/JFB8wGcPE64qLyzi9" target="_blank" class="social-btn bg-gradient-to-r from-teal-400 to-green-500">Join Now</a>
+  </div>
+</section>
+
+<!-- About / Mission / Vision / Programs Section -->
+<section class="py-16 px-6 max-w-6xl mx-auto">
+
+  <h2 class="section-title" data-aos="fade-right">Our Mission</h2>
+  <p class="section-text" data-aos="fade-left" data-aos-delay="100">
+    Gulab Seva Foundation brings hope, dignity, and opportunity to every life. We aim to create an India where everyone has a safe home, every child receives education, every elder is respected, and every deserving youth gains meaningful employment. Vulnerable people receive care and support at our GSF campuses.
+  </p>
+
+  <h2 class="section-title mt-12" data-aos="fade-right" data-aos-delay="200">Our Vision</h2>
+  <p class="section-text" data-aos="fade-left" data-aos-delay="300">
+    A society where no one is hungry, homeless, or helpless. Communities grow together, humanity remains the greatest strength, and the first 2 Crore followers receive GSF IDs representing trust, belonging, and priority access to all future benefits.
+  </p>
+
+  <h2 class="section-title mt-12" data-aos="fade-right" data-aos-delay="400">Programs & Services</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8 justify-center mx-auto max-w-5xl">
+    <div class="mission-item" data-aos="fade-up" data-aos-delay="100">
+      <div class="text-teal-400 text-4xl mb-4">🏠</div>
+      <h3 class="text-xl font-bold mb-2">Safe Homes</h3>
+      <p>Providing shelter for orphans, elderly, and families in need at our GSF campuses.</p>
+    </div>
+    <div class="mission-item" data-aos="fade-up" data-aos-delay="200">
+      <div class="text-green-400 text-4xl mb-4">🎓</div>
+      <h3 class="text-xl font-bold mb-2">Education</h3>
+      <p>Quality education, vocational training, and skill development at GSF schools.</p>
+    </div>
+    <div class="mission-item" data-aos="fade-up" data-aos-delay="300">
+      <div class="text-blue-400 text-4xl mb-4">💊</div>
+      <h3 class="text-xl font-bold mb-2">Healthcare</h3>
+      <p>Medical facilities, free health checkups, and hospitals at our campuses.</p>
+    </div>
+    <div class="mission-item" data-aos="fade-up" data-aos-delay="400">
+      <div class="text-purple-400 text-4xl mb-4">💼</div>
+      <h3 class="text-xl font-bold mb-2">Employment</h3>
+      <p>Creating sustainable jobs and livelihood opportunities at GSF centers.</p>
+    </div>
+    <div class="mission-item" data-aos="fade-up" data-aos-delay="500">
+      <div class="text-pink-400 text-4xl mb-4">🌍</div>
+      <h3 class="text-xl font-bold mb-2">Community</h3>
+      <p>Building a strong network of supporters, followers, and volunteers worldwide.</p>
+    </div>
+  </div>
+
+</section>
+
+<!-- Footer -->
+<footer class="py-6 text-center border-t border-gray-700 mt-12" data-aos="fade-up">
+  <p>© 2025 Gulab Seva Foundation | Humanitarian mission — no fees, no donations. Only service, trust, and humanity.</p>
+</footer>
+
+</body>
+</html>
